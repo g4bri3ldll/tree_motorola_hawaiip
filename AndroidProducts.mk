@@ -1,4 +1,3 @@
-#
 # Copyright (C) 2023 The Android Open Source Project
 # Copyright (C) 2023 SebaUbuntu's TWRP device tree generator
 #
@@ -6,7 +5,7 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/twrp_hawaiip.mk
+    $(LOCAL_PATH)/twrp_hawaiip.mk
 
 COMMON_LUNCH_CHOICES := \
     twrp_hawaiip-user \
