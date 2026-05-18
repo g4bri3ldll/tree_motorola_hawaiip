@@ -1,4 +1,3 @@
-#
 # Copyright (C) 2023 The Android Open Source Project
 # Copyright (C) 2023 SebaUbuntu's TWRP device tree generator
 #
@@ -12,8 +11,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit some common twrp stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
 
-# Inherit from hawaiip device
-$(call inherit-product, device/motorola/hawaiip/device.mk)
+# Inherit from hawaiip device (Uso correto da variável local)
+$(call inherit-product, $(LOCAL_PATH)/device.mk)
 
 PRODUCT_DEVICE := hawaiip
 PRODUCT_NAME := twrp_hawaiip
