@@ -2,34 +2,53 @@
 # The filesystem that contains the filesystem checker binary (typically /system) cannot
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
-# mount point       fstype    device                                                                flags
+# mount point       fstype    device                                                   flags
 
-# Super Partitions
-/system_a           ext4       /dev/block/mapper/system_a                                 flags=backup=1;flashimg=1;slotselect;display="System Image A"
-/vendor_a           ext4       /dev/block/mapper/vendor_a                                 flags=backup=1;flashimg=1;slotselect;display="Vendor Image A"
-/product_a          ext4       /dev/block/mapper/product_a                                flags=backup=1;flashimg=1;slotselect;display="Product Image A"
-/system_ext_a       ext4       /dev/block/mapper/system_ext_a                             flags=backup=1;flashimg=1;slotselect;display="System_EXT Image A"
+# Super Partitions (Logical Images)
+/system_image       emmc      /dev/block/mapper/system                                    flags=backup=1;flashimg=1;slotselect;display="System Image";logical
+/vendor_image       emmc      /dev/block/mapper/vendor                                    flags=backup=1;flashimg=1;slotselect;display="Vendor Image";logical
+/product_image      emmc      /dev/block/mapper/product                                   flags=backup=1;flashimg=1;slotselect;display="Product Image";logical
 
-# Boot
+# Boot & Metadata
 /boot               emmc      /dev/block/by-name/boot                                     flags=display="Boot";flashimg=1;backup=1;slotselect
-/vendor_boot        emmc      /dev/block/by-name/vendor_boot                              flags=display="Vendor Boot";flashimg=1;backup=1;slotselect
-/vbmeta             emmc      /dev/block/by-name/vbmeta                                   flags=slotselect;display="VBMeta";flashimg=1;backup=1;slotselect
+/metadata           ext4      /dev/block/by-name/md_udc                                   flags=display="Metadata";backup=1;wipeingui
 
-## Sensitive data (IMEI, MAC, ...)
-/protect_f          ext4      /dev/block/by-name/protect1                                 flags=display="Protect_f";backup=1;slotselect
-/protect_s          ext4      /dev/block/by-name/protect2                                 flags=display="Protect_s";backup=1;slotselect
-/nvram              emmc      /dev/block/by-name/nvram                                    flags=display="Nvram";backup=1;slotselect
-/nvdata             ext4      /dev/block/by-name/nvdata                                   flags=display="Nvdata";backup=1;slotselect
+# VBMeta
+/vbmeta             emmc      /dev/block/by-name/vbmeta                                   flags=display="VBMeta";flashimg=1;backup=1;slotselect
+/vbmeta_system      emmc      /dev/block/by-name/vbmeta_system                            flags=display="VBMeta System";flashimg=1;backup=1;slotselect
+/vbmeta_vendor      emmc      /dev/block/by-name/vbmeta_vendor                            flags=display="VBMeta Vendor";flashimg=1;backup=1;slotselect
 
-## Firmware
-/dtbo               emmc      /dev/block/by-name/dtbo	                                    flags=display="Dtbo";backup=1;flashimg=1;slotselect
-/logo	              emmc      /dev/block/by-name/logo	                                    flags=display="Logo";backup=1;flashimg=1;slotselect
+## Sensitive data (CORRIGIDO PARA A RAIZ DO RAMDISK)
+/protect_f          ext4      /dev/block/platform/bootdevice/by-name/protect1             flags=display="Protect_f";backup=1
+/protect_s          ext4      /dev/block/platform/bootdevice/by-name/protect2             flags=display="Protect_s";backup=1
+/nvram              emmc      /dev/block/platform/bootdevice/by-name/nvram              flags=display="Nvram";backup=1
+/nvdata             ext4      /dev/block/platform/bootdevice/by-name/nvdata             flags=display="Nvdata";backup=1
+/nvcfg              ext4      /dev/block/platform/bootdevice/by-name/nvcfg              flags=display="Nvcfg";backup=1
+/persist            ext4      /dev/block/platform/bootdevice/by-name/persist            flags=display="Persist";backup=1
+/journey            ext4      /dev/block/platform/bootdevice/by-name/journey_persist    flags=display="Journey";backup=1
+
+## Firmware & Bootloaders
+/dtbo               emmc      /dev/block/by-name/dtbo                                     flags=display="Dtbo";backup=1;flashimg=1
+/logo               emmc      /dev/block/by-name/logo                                     flags=display="Logo";backup=1;flashimg=1
+/bootloader         emmc      /dev/block/by-name/lk                                       flags=display="Bootloader";backup=1
+/bootloader2        emmc      /dev/block/by-name/lk2                                      flags=display="Bootloader2";backup=1
+/misc               emmc      /dev/block/by-name/para                                     flags=display="Misc";backup=1
 /expdb              emmc      /dev/block/by-name/expdb
-#/seccfg            emmc      /dev/block/by-name/seccfg
-/tee                emmc      /dev/block/by-name/tee                                      flags=slotselect;
-/spmfw              emmc      /dev/block/by-name/spmfw                                    flags=slotselect;
-/otp                emmc      /dev/block/by-name/otp
+/seccfg             emmc      /dev/block/by-name/seccfg
+/tee1               emmc      /dev/block/by-name/tee1                                     flags=display="Tee1"
+/tee2               emmc      /dev/block/by-name/tee2                                     flags=display="Tee2"
+/spmfw              emmc      /dev/block/by-name/spmfw
+/scp1               emmc      /dev/block/by-name/scp1
+/scp2               emmc      /dev/block/by-name/scp2
+/sspm_1             emmc      /dev/block/by-name/sspm_1
+/sspm_2             emmc      /dev/block/by-name/sspm_2
+
+## Modems
+/md1img             emmc      /dev/block/by-name/md1img                                   flags=display="Modem";backup=1
+/md1dsp             emmc      /dev/block/by-name/md1dsp
+/md1arm7            emmc      /dev/block/by-name/md1arm7
+/md3img             emmc      /dev/block/by-name/md3img
 
 ## Removable storage
-/external_sd        vfat      /dev/block/mmcblk1p1                 /dev/block/mmcblk1     flags=display="MicroSD";storage;wipeingui;removable
-/usbstorage         vfat      /dev/block/sda1                      /dev/block/sda         flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
+/external_sd        vfat      /dev/block/mmcblk1p1          /dev/block/mmcblk1           flags=display="MicroSD";storage;wipeingui;removable
+/usbstorage         vfat      /dev/block/sda1               /dev/block/sda               flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
