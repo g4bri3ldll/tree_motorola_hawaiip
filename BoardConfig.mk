@@ -75,6 +75,8 @@ BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 
+BOARD_RAMDISK_COMPRESS := gz
+
 # Vendor Boot Recovery Ramdisk
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
 BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
@@ -131,6 +133,7 @@ TW_INCLUDE_FBE := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
 USE_FSCRYPT := true
 TARGET_HW_DISK_ENCRYPTION := false
+TW_USE_FSCRYPT_POLICY := 2
 
 # TWRP Configuration
 TW_THEME := portrait_hdpi
@@ -148,8 +151,8 @@ TW_SCREEN_BLANK_ON_BOOT := true
 # TW_NO_SCREEN_BLANK := true
 
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
-TW_MAX_BRIGHTNESS := 2047
-TW_DEFAULT_BRIGHTNESS := 1200
+TW_MAX_BRIGHTNESS := 255
+TW_DEFAULT_BRIGHTNESS := 120
 
 # This device does not support fastboot boot, do *NOT* remove!
 TW_NO_FASTBOOT_BOOT := true
