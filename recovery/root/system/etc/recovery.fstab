@@ -19,19 +19,14 @@ product /product ext4 ro wait,avb,logical,first_stage_mount,slotselect
 /dev/block/platform/bootdevice/by-name/userdata /data f2fs noatime,nosuid,nodev,discard,noflush_merge,fsync_mode=nobarrier,reserve_root=134217,resgid=1065,inlinecrypt latemount,wait,check,quota,reservedsize=128M,formattable,resize,checkpoint=fs,fileencryption=aes-256-xts:aes-256-cts:v2,keydirectory=/metadata/vold/metadata_encryption
 
 
+# BLOCO SENSÍVEL CORRIGIDO PARA A RAIZ DO RAMDISK
+/dev/block/platform/bootdevice/by-name/protect1 /protect_f ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+/dev/block/platform/bootdevice/by-name/protect2 /protect_s ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+/dev/block/platform/bootdevice/by-name/nvdata /nvdata ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+/dev/block/platform/bootdevice/by-name/nvcfg /nvcfg ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+/dev/block/platform/bootdevice/by-name/persist /persist ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+/dev/block/platform/bootdevice/by-name/journey_persist /journey ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc optional,check,formattable
 
-/dev/block/platform/bootdevice/by-name/protect1 /mnt/vendor/protect_f ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
-/dev/block/platform/bootdevice/by-name/protect2 /mnt/vendor/protect_s ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
-/dev/block/platform/bootdevice/by-name/nvdata /mnt/vendor/nvdata ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
-/dev/block/platform/bootdevice/by-name/nvcfg /mnt/vendor/nvcfg ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
-
-
-/dev/block/platform/bootdevice/by-name/persist /mnt/vendor/persist ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
-
-
-
-
-/dev/block/platform/bootdevice/by-name/journey_persist /mnt/journey/persist ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc optional,check,formattable
 
 /dev/block/platform/bootdevice/by-name/frp /persistent emmc defaults defaults
 
