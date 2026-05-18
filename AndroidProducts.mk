@@ -5,7 +5,7 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_PATH)/twrp_hawaiip.mk
+    device/motorola/hawaiip/twrp_hawaiip.mk
 
 COMMON_LUNCH_CHOICES := \
     twrp_hawaiip-user \
